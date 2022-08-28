@@ -39,6 +39,7 @@ class Gyakorlo3
         */
 
         // Két mátrix összeszorása
+        /*
         double[,] b = { { 3, 4}, { 1, 5} };
         double[,] a = { { 2, 4, 7 }, { 1, 5, 3 } };
         double[,] result = multiplyMatrix(a, b);
@@ -50,6 +51,18 @@ class Gyakorlo3
         {
             Console.WriteLine("A két mátrix nem szorozható össze");
         }
+        */
+        double[,] A = new double[2,2]; 
+        Console.WriteLine("Enter a, b, c, d: ");
+        for(int i = 0; i< A.GetLength(0); i++)
+        {
+            for (int j = 0; j < A.GetLength(1); j++)
+            {
+               A[i,j] =Convert.ToDouble(Console.ReadLine());
+            }
+        }
+        double[,] B = inverse(A);
+        tombKiIras(B);
     }
 
     public static bool isConsecutiveFour(int[,] values)
@@ -67,6 +80,22 @@ class Gyakorlo3
             }
         }
         return false;
+
+        }
+
+    public static double[,] inverse(double[,] A)
+    {
+        double[,] eredmeny = null;
+        double szorzo = A[0, 0] * A[1, 1] - A[0, 1] * A[1, 0];
+        if(szorzo != 0)
+        {
+            eredmeny = new double[A.GetLength(0), A.GetLength(1)];
+            eredmeny[0,0] = (1/szorzo) * A[1,1];
+            eredmeny[0,1] = (1 / szorzo) * A[0,1] *-1;
+            eredmeny[1,0] = (1 / szorzo) * A[1,0] *-1;
+            eredmeny[1,1] = (1 / szorzo) * A[0,0];
+        }
+        return eredmeny;
     }
 
     public static double[,] addMatrix(double[,] a, double[,] b)
