@@ -52,6 +52,9 @@ class Gyakorlo3
             Console.WriteLine("A két mátrix nem szorozható össze");
         }
         */
+
+        // 2x2-es mátrix inverze
+        /*
         double[,] A = new double[2,2]; 
         Console.WriteLine("Enter a, b, c, d: ");
         for(int i = 0; i< A.GetLength(0); i++)
@@ -61,8 +64,38 @@ class Gyakorlo3
                A[i,j] =Convert.ToDouble(Console.ReadLine());
             }
         }
-        double[,] B = inverse(A);
+        double[,] B = inverseKetto(A);
         tombKiIras(B);
+        */
+
+        double[,] A = { {1,2,1 }, {2,3,1 }, {4,5,3 } };
+        double[,] B = { { 1, 4, 2 }, { 2, 5, 8 }, { 2, 1, 8 } };
+        double[,] eredmeny = inverseHarom(A);
+        tombKiIras(eredmeny);
+        eredmeny = inverseHarom(B);
+        tombKiIras(eredmeny);
+
+    }
+
+    public static double[,] inverseHarom(double[,] A)
+    {
+        double[,] eredmeny = null; 
+        double VonalAVonal = A[0, 0] * A[1,1] * A[2,2] + A[2,0] * A[0,1] * A[1,2] + A[0,2] * A[1,0] * A[2,1] - A[0, 2] * A[1, 1] * A[2, 0] - A[0, 0] * A[1, 2] * A[2, 1] - A[2, 2] * A[1, 0] * A[0, 1];
+        if(VonalAVonal != 0)
+        {
+            eredmeny = new double[3, 3];
+            eredmeny[0, 0] = 1 / VonalAVonal * (A[1, 1] * A[2,2] - A[1,2]* A[2,1]);
+            eredmeny[0, 1] = 1 / VonalAVonal * (A[0, 2] * A[2, 1] - A[0, 1] * A[2, 2]);
+            eredmeny[0, 2] = 1 / VonalAVonal * (A[0, 1] * A[1, 2] - A[0, 2] * A[1, 1]);
+            eredmeny[1, 0] = 1 / VonalAVonal * (A[1, 2] * A[2, 0] - A[1, 0] * A[2, 2]);
+            eredmeny[1, 1] = 1 / VonalAVonal * (A[0, 0] * A[2, 2] - A[0, 2] * A[2, 0]);
+            eredmeny[1, 2] = 1 / VonalAVonal * (A[0, 2] * A[1, 0] - A[0, 0] * A[1, 2]);
+            eredmeny[2, 0] = 1 / VonalAVonal * (A[1, 0] * A[2, 1] - A[1, 1] * A[2, 0]);
+            eredmeny[2, 1] = 1 / VonalAVonal * (A[0, 1] * A[2, 0] - A[0, 0] * A[2, 1]);
+            eredmeny[2, 2] = 1 / VonalAVonal * (A[0, 0] * A[1, 1] - A[0, 1] * A[1, 0]);
+
+        }
+        return eredmeny;
     }
 
     public static bool isConsecutiveFour(int[,] values)
@@ -83,7 +116,7 @@ class Gyakorlo3
 
         }
 
-    public static double[,] inverse(double[,] A)
+    public static double[,] inverseKetto(double[,] A)
     {
         double[,] eredmeny = null;
         double szorzo = A[0, 0] * A[1, 1] - A[0, 1] * A[1, 0];
