@@ -24,6 +24,7 @@ class Gyakorlo3
         Console.WriteLine("Van 4-es minta a kétdimenziós tömbben: " + isConsecutiveFour(tomb));
         */
 
+        /* Két mátrix összeadása
         double[,] a = { {2,4,7}, {1,5,3} };
         double[,] b = { { 1, 7, -2 }, { 4, 2, 1 } };
         double[,] result = addMatrix(a, b);
@@ -34,6 +35,20 @@ class Gyakorlo3
         else
         {
             Console.WriteLine("A két mátrix nem adható össze");
+        }
+        */
+
+        // Két mátrix összeszorása
+        double[,] b = { { 3, 4}, { 1, 5} };
+        double[,] a = { { 2, 4, 7 }, { 1, 5, 3 } };
+        double[,] result = multiplyMatrix(a, b);
+        if (result != null)
+        {
+            tombKiIras(result);
+        }
+        else
+        {
+            Console.WriteLine("A két mátrix nem szorozható össze");
         }
     }
 
@@ -69,6 +84,46 @@ class Gyakorlo3
             return result;
         }
         return null;
+    }
+
+    public static double[,] multiplyMatrix(double[,] a, double[,] b)
+    {
+        double[,] eredmeny = null;
+        double osszeg = 0;
+        int i, j, k;
+        if (a.GetLength(1) == b.GetLength(0))
+        {
+            eredmeny = new double[a.GetLength(0), b.GetLength(1)];
+            for(i = 0; i < a.GetLength(0); i++)
+            {
+                for( j = 0; j < b.GetLength(1); j++)
+                {
+                    osszeg = 0;
+                    for (k = 0; k < a.GetLength(0); k++)
+                    {
+                        osszeg += a[i, k] * b[k, j];
+                    }
+                    eredmeny[i, j] = osszeg;
+                }
+            }
+        }
+        else if (b.GetLength(1) == a.GetLength(0))
+        {
+            eredmeny = new double[b.GetLength(0), a.GetLength(1)];
+            for (i = 0; i < b.GetLength(0); i++)
+            {
+                for (j = 0; j < a.GetLength(1); j++)
+                {
+                    osszeg = 0;
+                    for (k = 0; k < b.GetLength(0); k++)
+                    {
+                        osszeg += b[i, k] * a[k, j];
+                    }
+                    eredmeny[i, j] = osszeg;
+                }
+            }
+        }
+        return eredmeny;
     }
 
     public static void tombKiIras(double[,] tomb)
